@@ -12,6 +12,14 @@ website_timeTable = "https://issatso.rnu.tn/issatsoplus/student/timetable"
 
 path = 'C:\\Users\\medde\\Downloads\\Softwares\\chromedriver.exe'
 
+data = {}
+with open(".env", "r") as file:
+    lines = file.readlines()
+    for l in lines:
+        l.replace("\n", "")
+        key, value = l.split("=")
+        data[key] = value
+
 service = Service(executable_path=path)
 option = Options()
 
@@ -21,12 +29,12 @@ wait = WebDriverWait(driver, 20)
 
 driver.get(website_timeTable)
 
-time_table = get_time_table(wait, 'issatso+ email', 'issatso+ password')
+time_table = get_time_table(wait, data["email"], data["email_pwd"])
 
 driver.get(website_calander)
 
 print("❌login to gmail")
-login(wait, 'gmail', 'gmail password')
+login(wait, data["gmail"], data["gmail_pwd"])
 print("✅ Logged in to gmail")
 print("❌filling calender")
 create_time_table(wait)

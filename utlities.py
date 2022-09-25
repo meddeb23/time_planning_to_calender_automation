@@ -17,47 +17,47 @@ def get_week_type():
             "type": ["QA"]
         },
         {
-            "d": (date(2022, 9, 26), date(2022, 10, 1)),
+            "d": (date(2022, 9, 25), date(2022, 10, 1)),
             "type": ["QB"]
         },
         {
-            "d": (date(2022, 10, 3), date(2022, 10, 8)),
+            "d": (date(2022, 10, 2), date(2022, 10, 8)),
             "type": ["QA"]
         },
         {
-            "d": (date(2022, 10, 10), date(2022, 10, 15)),
+            "d": (date(2022, 10, 9), date(2022, 10, 15)),
             "type": ["QB"]
         },
         {
-            "d": (date(2022, 10, 17), date(2022, 10, 22)),
+            "d": (date(2022, 10, 16), date(2022, 10, 22)),
             "type": ["QA", "Z3"]
         },
         {
-            "d": (date(2022, 10, 24), date(2022, 10, 29)),
+            "d": (date(2022, 10, 23), date(2022, 10, 29)),
             "type": ["QB", "Z4"]
         },
         {
-            "d": (date(2022, 11, 7), date(2022, 11, 12)),
+            "d": (date(2022, 11, 6), date(2022, 11, 12)),
             "type": ["QA", "Z3"]
         },
         {
-            "d": (date(2022, 11, 14), date(2022, 11, 19)),
+            "d": (date(2022, 11, 13), date(2022, 11, 19)),
             "type": ["QB", "Z4"]
         },
         {
-            "d": (date(2022, 11, 21), date(2022, 10, 26)),
+            "d": (date(2022, 11, 20), date(2022, 10, 26)),
             "type": ["QA", "Z3"]
         },
         {
-            "d": (date(2022, 11, 28), date(2022, 12, 3)),
+            "d": (date(2022, 11, 27), date(2022, 12, 3)),
             "type": ["QB", "Z4"]
         },
         {
-            "d": (date(2022, 11, 5), date(2022, 12, 10)),
+            "d": (date(2022, 11, 4), date(2022, 12, 10)),
             "type": ["QA", "Z3"]
         },
         {
-            "d": (date(2022, 11, 12), date(2022, 12, 17)),
+            "d": (date(2022, 11, 11), date(2022, 12, 17)),
             "type": ["QB", "Z4"]
         },
     ]
@@ -87,7 +87,6 @@ def get_time_table(wait, email, pwd, file=True):
     time_table_data = {}
     day = ''
     week_type = get_week_type()
-
     for col in time_table[1:len(time_table) - 1]:
         [session, start, end, subject, _, type, classNumber,
          regime] = col.find_elements(by=By.TAG_NAME, value='center')

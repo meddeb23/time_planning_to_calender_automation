@@ -27,9 +27,9 @@ option.headless = False  #change to true in production
 driver = webdriver.Chrome(service=service, options=option)
 wait = WebDriverWait(driver, 20)
 
-driver.get(website_timeTable)
+# driver.get(website_timeTable)
 
-time_table = get_time_table(wait, data["email"], data["email_pwd"])
+# time_table = get_time_table(wait, data["email"], data["email_pwd"])
 
 driver.get(website_calander)
 

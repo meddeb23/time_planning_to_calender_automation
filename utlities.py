@@ -67,6 +67,14 @@ def get_week_type():
             return i['type']
 
 
+def format_time(time):
+    t_time = time.split("h")
+    h, m = int(t_time[0]), int(t_time[1])
+    t = f'{h}:{m:02d}am' if h <= 12 else f'{(h%12)}:{m:02d}pm'
+    sleep(1)
+    return t
+
+
 def get_time_table(wait, email, pwd, file=True):
     email_input = wait.until(
         EC.presence_of_element_located((By.XPATH, '//*[@id="id_email"]')))
@@ -118,11 +126,14 @@ def get_time_table(wait, email, pwd, file=True):
 
 
 def login(wait, email, pwd):
+    print("😎 activate email")
     email_input = wait.until(
         EC.presence_of_element_located((By.XPATH, '//*[@id="identifierId"]')))
-    sleep(1)
+    sleep(3)
     email_input.send_keys(email)
     email_input.send_keys(Keys.ENTER)
+    sleep(3)
+    print("😎 activate password")
     pwd_input = wait.until(
         EC.presence_of_element_located(
             (By.XPATH, '//*[@id="password"]/div[1]/div/div[1]/input')))
@@ -138,17 +149,9 @@ def login(wait, email, pwd):
         ))).click()
 
 
-def format_time(time):
-    t_time = time.split("h")
-    h, m = int(t_time[0]), int(t_time[1])
-    t = f'{h}:{m:02d}am' if h <= 12 else f'{(h%12)}:{m:02d}pm'
-    sleep(1)
-    return t
-
-
 def create_time_table(wait):
     print("⌛ waiting for page to load")
-    sleep(4)
+    sleep(10)
 
     print("📁 reading time table file")
     with open("time_table.json", "r", encoding='utf-8') as file:
@@ -165,50 +168,62 @@ def create_time_table(wait):
                 wait.until(
                     EC.presence_of_all_elements_located(
                         (By.CSS_SELECTOR, '.WJVfWe')))[day_num + 1].click()
-
+                print("✅ writing title")
                 wait.until(
                     EC.presence_of_element_located((
                         By.XPATH,
-                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[3]/div[1]/div[2]/div/div[2]/div[1]/div/div[1]/input'
+                        '//*[@id="yDmH0d"]/div/div/div[2]/span/div/div[1]/div[2]/div[1]/div[2]/div/div[2]/div[1]/div/div[1]/input'
                     ))).send_keys(
                         f""" {s["subject"]} {s["class"]} {s["type"]}""")
 
                 sleep(1)
+                print("✅ click to set the time")
                 wait.until(
                     EC.presence_of_element_located((
                         By.XPATH,
-                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[3]/div[1]/div[3]/div[2]/span[1]/div/div[1]/div/div[1]/div/div/div[2]/div/div/span/span/div[1]/div/span[1]/span'
+                        '//*[@id="tabEvent"]/div/div[1]/div/div[1]/div/div/div[2]/div/div/span/span/div[1]/div/span[1]/span'
                     ))).click()
+                print("✅ write start the time")
                 wait.until(
                     EC.presence_of_element_located((
                         By.XPATH,
-                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[3]/div[1]/div[3]/div[2]/span[1]/div/div[1]/div/div[2]/div/div[1]/div/div[2]/div/div[2]/div[1]/div[1]/div/label/div[1]/div/input'
+                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[2]/div[1]/div[3]/div[2]/span[1]/div/div[1]/div/div[2]/div/div[1]/div/div[2]/div/div[2]/div[1]/div[1]/div/label/div[1]/div/input'
                     ))).send_keys(format_time(s["start"]))
                 sleep(1)
+                print("✅ click to set the time")
                 wait.until(
                     EC.presence_of_element_located((
                         By.XPATH,
-                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[3]/div[1]/div[3]/div[2]/span[1]/div/div[1]/div/div[2]/div/div[1]/div/div[2]/div/div[2]/div[1]/div[1]/div/label/div[1]/div/input'
+                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[2]/div[1]/div[3]/div[2]/span[1]/div/div[1]/div/div[2]/div/div[1]/div/div[2]/div/div[2]/div[1]/div[1]/div/label/div[1]/div/input'
                     ))).send_keys(Keys.TAB)
+                # wait.until(
+                #     EC.presence_of_element_located((
+                #         By.XPATH,
+                #         '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[3]/div[1]/div[3]/div[2]/span[1]/div/div[1]/div/div[2]/div/div[1]/div/div[2]/div/div[2]/div[1]/div[1]/div/label/div[1]/div/input'
+                #     )))
+                print("✅ write the end time")
                 wait.until(
                     EC.presence_of_element_located((
                         By.XPATH,
-                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[3]/div[1]/div[3]/div[2]/span[1]/div/div[1]/div/div[2]/div/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div/label/div[1]/div/input'
+                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[2]/div[1]/div[3]/div[2]/span[1]/div/div[1]/div/div[2]/div/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div/label/div[1]/div/input'
                     ))).send_keys(format_time(s["end"]))
+
+                print("✅ change the calendar")
                 wait.until(
                     EC.presence_of_element_located((
                         By.XPATH,
-                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[3]/div[1]/div[3]/div[2]/span[1]/div/div[7]/div[1]/div/div[2]/div/div/span/span/div[1]/div/div[1]/span'
+                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[2]/div[1]/div[3]/div[2]/span[1]/div/div[7]/div[1]/div/div[2]/div/div/span/span/div[1]/div/div[1]/span'
+                    ))).click()
+                sleep(1)
+                print("✅ ")
+                wait.until(
+                    EC.presence_of_element_located((
+                        By.XPATH,
+                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[2]/div[1]/div[3]/div[2]/span[1]/div/div[7]/div[2]/div/div[1]/div/div[2]/div[1]/div/div[2]/div[3]'
                     ))).click()
                 sleep(1)
                 wait.until(
                     EC.presence_of_element_located((
                         By.XPATH,
-                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[3]/div[1]/div[3]/div[2]/span[1]/div/div[7]/div[2]/div/div[1]/div/div[2]/div[1]/div/div[2]/div[3]'
-                    ))).click()
-                sleep(1)
-                wait.until(
-                    EC.presence_of_element_located((
-                        By.XPATH,
-                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[3]/div[2]/div[4]/button'
+                        '/html/body/div[4]/div/div/div[2]/span/div/div[1]/div[2]/div[2]/div[4]/button'
                     ))).click()

@@ -7,5 +7,6 @@ This automation Tool was created for ISSATSO student to easly integrate their ti
 ### 📑 How to use
 - clone the repo in your local machine
 - install selenium (4.1.3)
-- write your calendar email and password 
-- Write your ISSATSO+ email and password 
+- rename .env.example to .env
+- write your calendar email and password in .env file
+- Write your ISSATSO+ email and password in .env file
